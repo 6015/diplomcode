@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+    <a style="position:absolute; left:5px;" asp-area="" asp-controller="Home" asp-action="Privacy">
+        <img src="~/images/93634.png" height="50" />
+    </a>
+<div class="text-left">
+    <h1 style="text-align:left; font-size:32px; padding:20px;">@Model.lot_name</h1>
+    <img src="@Url.Content(Model.lot_photo)" width="500px" />
+    <p style="padding:20px; font-size:14px;">@Model.lot_description</p>
+    @{
+
+        Microsoft.EntityFrameworkCore.DbSet<diplom.Models.User> users = diplom.Controllers.HomeController.db.Users;
+        int id = Model.user_id;
+        diplom.Models.User curruser = users.Where(x => x.user_id == id).FirstOrDefault();
+        <p style="padding:20px;"><img src="@Url.Content(curruser.user_avatar)" style="border-radius:100px" width="100px" /> Created by: @curruser.user_name  @curruser.user_surname</p>
+    }
+    <p style="text-align:left;">Category: @Model.lot_category</p>
+    <p style="text-align: left;">Create date: @Model.lot_data</p>
+    <h2>Comments</h2>
+    @if (!SignInManager.IsSignedIn(User))
+    {
+        <form method="post" action="~/Home/sendcomment" style="min-width:500px; display:block; max-width: 1000px;">
+            <label>Text of your comment:</label><br />
+            <input type="text" name="text" style="width:800px; height:150px;" /><br />
+            <input type="submit" value="Отправить" />
+        </form>
+    }
+    else
+    {
+        <p style="font-size:24px;">Only authorized users can leave comments.</p>
+    }
+<table style=" width: 90%; text-align: left; column-rule: solid; border-spacing: 20px; padding:15px;">
+    @{ int idlot = Model.lot_id;
+        foreach (diplom.Models.Comment b in diplom.Controllers.HomeController.db.Comments.Where(x => x.lot_id == idlot).ToList())
+        {
+            int id2 = b.user_id;
+            diplom.Models.User curruser2 = users.Where(x => x.user_id == id2).FirstOrDefault();
+            <tr style="padding:10px">
+                <td><img src="@Url.Content(curruser2.user_avatar)" style="border-radius:100px" width="100px" /></td>
+                <td><p>@curruser2.user_name  @curruser2.user_surname</p></td>
+                <td><p>@b.comm_text</p></td>
+                </tr>
+                }
+
+                }
+        </table>
+</div>
