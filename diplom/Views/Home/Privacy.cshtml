@@ -12,7 +12,7 @@
         </tr>
         @foreach (diplom.Models.Lot b in Model.Lots)
         {
-            Microsoft.EntityFrameworkCore.DbSet<diplom.Models.User> users = Model.Users;
+            Microsoft.EntityFrameworkCore.DbSet<diplom.Models.User> users = diplom.Controllers.HomeController.db.Users;//Model.Users;
             diplom.Models.User curruser = users.Where(x => x.user_id == b.user_id).FirstOrDefault();
             <tr style="border:1px solid;">
                 <td style="text-align:center; font-size:20px; border: 1px solid;"><p>@b.lot_name</p></td>

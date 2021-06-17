@@ -29,6 +29,11 @@ namespace diplom.Controllers
             return View(db);
         }
         [HttpGet]
+        public IActionResult Privacy2(string category)
+        {
+            return View(db.Lots.Where(x=>x.lot_category==category));
+        }
+        [HttpGet]
         public IActionResult Item(int lot)
         {
 
