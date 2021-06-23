@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Lot";
 }
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
@@ -20,13 +20,15 @@
     <p style="text-align:left;">Category: @Model.lot_category</p>
     <p style="text-align: left;">Create date: @Model.lot_data</p>
     <h2>Comments</h2>
-    @if (!SignInManager.IsSignedIn(User))
+    @if (SignInManager.IsSignedIn(User))
     {
-        <form method="post" action="~/Home/sendcomment" style="min-width:500px; display:block; max-width: 1000px;">
-            <label>Text of your comment:</label><br />
-            <input type="text" name="text" style="width:800px; height:150px;" /><br />
-            <input type="submit" value="Отправить" />
-        </form>
+<form method="post" action="~/Home/sendcomment" style="min-width:500px; display:block; max-width: 1000px;">
+    <label>Text of your comment:</label><br />
+    <input type="hidden" name="login" value="@User.Identity.Name" />
+    <input type="hidden" name="lot" value="@Model.lot_id" />
+    <input type="text" name="text" style="width:800px; text-align:start;  height:150px; text-anchor:start" /><br />
+    <input type="submit" value="Send" />
+</form>
     }
     else
     {

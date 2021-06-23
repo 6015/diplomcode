@@ -13,6 +13,7 @@ namespace diplom.Models
         public string user_name { get; set; }
         public string user_surname { get; set; }
         public string user_password { get; set; }
+        public string user_email { get; set; }
         public string user_avatar { get; set; }
         private string user_telegram;
         private string user_category;

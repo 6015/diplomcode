@@ -1,0 +1,75 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+    <a style="position:absolute; left:5px;" asp-area="" asp-controller="Home" asp-action="Privacy">
+        <img src="~/images/93634.png" height="50" />
+    </a>
+<h4>
+    Create lot page
+</h4>
+<div class="text-left">
+    @*<h1 style="text-align:left; font-size:32px; padding:20px;">@Model.lot_name</h1>
+        <img src="@Url.Content(Model.lot_photo)" width="500px" />
+        <p style="padding:20px; font-size:14px;">@Model.lot_description</p>
+        @{
+
+            Microsoft.EntityFrameworkCore.DbSet<diplom.Models.User> users = diplom.Controllers.HomeController.db.Users;
+            int id = Model.user_id;
+            diplom.Models.User curruser = users.Where(x => x.user_id == id).FirstOrDefault();
+            <p style="padding:20px;"><img src="@Url.Content(curruser.user_avatar)" style="border-radius:100px" width="100px" /> Created by: @curruser.user_name  @curruser.user_surname</p>
+        }
+        <p style="text-align:left;">Category: @Model.lot_category</p>
+        <p style="text-align: left;">Create date: @Model.lot_data</p>
+        <h2>Comments</h2>*@
+    @if (SignInManager.IsSignedIn(User))
+    {
+        
+    <form method="post" action="~/Home/createlot" style="min-width:500px; display:block; max-width: 1000px;" enctype="multipart/form-data">
+        <label>Input your lot data:</label><br />
+        <input type="text" name="name" style="width:200px; height:25px;" />
+        <label for="category">Select category:</label>
+        <select name="category">
+            <option value="tech">Tech</option>
+            <option value="meclot">Men's clothing</option>
+            <option value="messh">Men's shoes</option>
+            <option value="auto">Auto</option>
+            <option value="equipment">Equipment</option>
+            <option value="womenscl">Women's clothing</option>
+            <option value="womensshoes">Women's shoes</option>
+            <option value="furniture">Furniture</option>
+            <option value="tourism">Tourism</option>
+            <option value="books">Books</option>
+            <option value="child">For children</option>
+            <option value="renovation">Renovation</option>
+            <option value="garden">Garden</option>
+            <option value="hobbies">Hobbies</option>
+            <option value="sport">Sport</option>
+        </select>
+        <input type="hidden" name="login" value="@User.Identity.Name" />
+        <input type="text" name="text" style="width:800px; height:150px; text-anchor:start" /><br />
+        <input type="file" name="photo" accept=".jpg, .jpeg, .png"/><br>
+        <input type="submit" value="Send" />
+    </form>
+}
+else
+{
+<p style="font-size:24px;">Only authorized users can leave lots.</p>
+}
+    @*<table style=" width: 90%; text-align: left; column-rule: solid; border-spacing: 20px; padding:15px;">
+        @{ int idlot = Model.lot_id;
+            foreach (diplom.Models.Comment b in diplom.Controllers.HomeController.db.Comments.Where(x => x.lot_id == idlot).ToList())
+            {
+                int id2 = b.user_id;
+                diplom.Models.User curruser2 = users.Where(x => x.user_id == id2).FirstOrDefault();
+                <tr style="padding:10px">
+                    <td><img src="@Url.Content(curruser2.user_avatar)" style="border-radius:100px" width="100px" /></td>
+                    <td><p>@curruser2.user_name  @curruser2.user_surname</p></td>
+                    <td><p>@b.comm_text</p></td>
+                    </tr>
+                    }
+
+                    }
+            </table>*@
+</div>
